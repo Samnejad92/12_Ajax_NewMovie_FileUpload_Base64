@@ -1,0 +1,108 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <title>نماوا</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="">
+  <meta property="og:type" content="">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
+
+  <link rel="apple-touch-icon" href="icon.png">
+  <!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/main.css">
+
+  <meta name="theme-color" content="#fafafa">
+</head>
+
+<body id="homeBody">
+
+<!-- Add your site or application content here -->
+<header id="film-detail">
+  <nav>
+    <img id="logo" src="img/logo.png">
+    <h1>
+      نماوا
+    </h1>
+    <a href="genres.html" class="header__genre">لیست ژانر ها</a>
+    <p class="header__search">جستجو</p>
+    <img id="search" src="img/search.svg"/>
+  </nav>
+  <div class="film-detail--header">
+    <div class="film-detail--cover"></div>
+    <img src="http://moviesapi.ir/images/tt0111161_poster.jpg" class="film-detail--poster"/>
+    <div class="film-detail--detail">
+      <h1>نام فیلم</h1>
+      <p>توضیحات فیلم!!</p>
+    </div>
+    <ul class="film-detail--detail__footer">
+      <li>USA</button>
+      <li>1997</button>
+      <li>7.9</button>
+    </div>
+  </div>
+</header>
+
+<div class="search--container" style="display: none">
+  <div class="search--overlay"></div>
+  <form action="index.html" method="get">
+    <div class="search--input-parent">
+      <input name="q" autocomplete="off" placeholder="نام فیلمی ک دنبالش میگردی ، البته به لاتین"/>
+      <img src="img/search-gray.svg">
+    </div>
+  </form>
+</div>
+
+<main id="home">
+  <h2 id="list-title">لیست کل فیلم ها</h2>
+  <div class="film--list">
+  </div>
+</main>
+
+<footer>
+  <p>Made With <span style="color: red">❤</span> For You</p>
+</footer>
+
+
+<script src="js/vendor/modernizr-3.11.2.min.js"></script>
+<script src="js/plugins.js"></script>
+<script src="js/vendor/axios.js"></script>
+<script src="js/main.js"></script>
+</body>
+<script>
+
+  function loadFilmDetail(film){
+      const cover =document.querySelector(".film-detail--cover")
+      const poster =document.querySelector(".film-detail--poster")
+      const title =document.querySelector(".film-detail--detail > h1")
+      const desc =document.querySelector(".film-detail--detail > p")
+      const country =document.querySelectorAll(".film-detail--detail__footer > li")[0]
+      const year =document.querySelectorAll(".film-detail--detail__footer > li")[1]
+      const rate =document.querySelectorAll(".film-detail--detail__footer > li")[2];
+
+      cover.style.backgroundImage = `url(${film.images[0]})`;
+      poster.src=film.poster;
+      title.innerHTML=film.title;
+      desc.innerHTML=film.plot;
+      country.innerHTML=film.country;
+      year.innerHTML=film.year;
+      rate.innerHTML=film.imdb_rating;
+  }
+
+  const search = new URLSearchParams(window.location.search);
+  const filmId = search.get("id");
+  axios.get(`http://moviesapi.ir/api/v1/movies/${filmId}`).then(res=>{
+    console.log(res.data);
+    loadFilmDetail(res.data);
+  }).catch(err=>{
+    console.log(err);
+  })
+</script>
+
+</html>
