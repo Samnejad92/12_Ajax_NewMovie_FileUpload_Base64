@@ -78,7 +78,35 @@
 <script src="js/vendor/axios.js"></script>
 <script src="js/main.js"></script>
 <script>
-
+function submitRegisterForm(){
+  event.preventDefault();
+  const email=document.getElementById("email").value
+  const name=document.getElementById("name").value
+  const password=document.getElementById("password").value
+  const body={
+    email,name,password
+  };
+  axios.post("https://moviesapi.ir/api/v1/register",body).then(res=>{
+    alert("success");
+  }).catch(err=>{
+    alert("Failed");
+  })
+}
+function submitLoginForm(){
+  event.preventDefault();
+  const email=document.getElementById("emailLogin").value
+  const password=document.getElementById("passwordLogin").value
+  const body={
+    username:email,
+    password,
+    grant_type:'password'
+  }
+  axios.post("https://moviesapi.ir/oauth/token",body).then(res=>{
+    alert("success");
+  }).catch(err=>{
+    alert("failed");
+  })
+}
 </script>
 </body>
 
