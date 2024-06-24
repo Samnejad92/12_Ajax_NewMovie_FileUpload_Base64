@@ -102,9 +102,10 @@ function submitLoginForm(){
     grant_type:'password'
   }
   axios.post("https://moviesapi.ir/oauth/token",body).then(res=>{
-    alert("success");
+    alert("ورود موفق");
+    localStorage.setItem("access_token",res.data.access_token);
   }).catch(err=>{
-    alert("failed");
+    alert("ورود ناموفق");
   })
 }
 </script>
